@@ -1,0 +1,88 @@
+{% extends 'data_logger/base.html' %}
+{% load static %}
+{% load data_filtering %}
+{% load template_helpers %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cpu_data.css' %}" type="text/css" />
+<title>CPU</title>
+{% endblock head %}
+
+{% block content %}
+
+<form method="get" >
+    <div class="filtering">
+    {{ data_filter.form.as_p }}
+        <input type="submit" />
+         <p>Number of registered logs: {{object_list.count}}</p>
+    </div>
+
+</form>
+<div style="overflow-x:auto;">
+<table>
+    <tr>
+        <th>Created at
+            <a href="{{request.path}}?{% url_replace '-created_at' %}">
+                <img src="{% static 'imgs/sort-button-asc.png' %}" alt="sort button ascending" width="20" height="20">
+            </a>
+            <a href="{{request.path}}?{% url_replace 'created_at' %}">
+                <img src="{% static 'imgs/sort-button-desc.png' %}" alt="sort button descending" width="20" height="20">
+            </a>
+        </th>
+        <th> Total Physical Memory </th>
+        <th> Available Physical Memory </th>
+        <th> Used Physical Memory </th>
+        <th> Use Percentage Physical Memory </th>
+        <th> Total Swap Memory </th>
+        <th> Free Swap Memory </th>
+        <th> Used Swap Memory </th>
+        <th> Use Percentage Swap Memory </th>
+        <th> Number of Bytes The System Has Swapped In From Disk </th>
+
+    </tr>
+    {% for memory in object_list %}
+    {% if memory.category == "INFO"%}
+    <tr style="background: lightblue;">
+        <td>{{memory.created_at}}</td>
+        <td>{{memory.total_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.available_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_physical_memory}}%</td>
+        <td>{{memory.total_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.free_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_swap_memory}}%</td>
+        <td>{{memory.sin_swap_memory}}</td>
+
+    </tr>
+    {% elif memory.category == "WRN"%}
+    <tr style="background: #e8db13;">
+        <td>{{memory.created_at}}</td>
+        <td>{{memory.total_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.available_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_physical_memory}}%</td>
+        <td>{{memory.total_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.free_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_swap_memory}}%</td>
+        <td>{{memory.sin_swap_memory}}</td>    </tr>
+
+    {% elif memory.category == "ERR"%}
+    <tr style="background: #f04d56;">
+        <td>{{memory.created_at}}</td>
+        <td>{{memory.total_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.available_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_physical_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_physical_memory}}%</td>
+        <td>{{memory.total_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.free_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.used_swap_memory | bytes_attribute_solver}}</td>
+        <td>{{memory.use_percentage_swap_memory}}%</td>
+        <td>{{memory.sin_swap_memory}}</td>
+    </tr>
+
+    {% endif %}
+    {% endfor %}
+</table>
+    </div>
+{% endblock content %}

@@ -1,1 +1,0 @@
-# Software-log-files-aggregation-system

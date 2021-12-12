@@ -1,0 +1,8 @@
+
+.filtering p {
+  display: inline-block;
+}
+
+tr th{
+   white-space: nowrap;
+}

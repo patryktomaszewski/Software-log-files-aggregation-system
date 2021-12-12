@@ -1,0 +1,81 @@
+{% extends 'data_logger/base.html' %}
+{% load static %}
+{% load data_filtering %}
+{% load template_helpers %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cpu_data.css' %}" type="text/css" />
+<title>CPU</title>
+{% endblock head %}
+
+{% block content %}
+
+<form method="get" >
+    <div class="filtering">
+    {{ data_filter.form.as_p }}
+        <input type="submit" />
+         <p>Number of registered logs: {{object_list.count}}</p>
+    </div>
+
+</form>
+<div style="overflow-x:auto;">
+<table>
+    <tr>
+        <th>Created at
+            <a href="{{request.path}}?{% url_replace '-created_at' %}">
+                <img src="{% static 'imgs/sort-button-asc.png' %}" alt="sort button ascending" width="20" height="20">
+            </a>
+            <a href="{{request.path}}?{% url_replace 'created_at' %}">
+                <img src="{% static 'imgs/sort-button-desc.png' %}" alt="sort button descending" width="20" height="20">
+            </a>
+        </th>
+        <th> Device </th>
+        <th> Total </th>
+        <th> Used </th>
+        <th> Free </th>
+        <th> Use % </th>
+        <th> Type </th>
+        <th> Mount </th>
+
+    </tr>
+    {% for disk in object_list %}
+    {% if disk.category == "INFO"%}
+    <tr style="background: lightblue;">
+        <td>{{disk.created_at}}</td>
+        <td>{{disk.device}}</td>
+        <td>{{ disk.total | bytes_attribute_solver}}</td>
+        <td>{{ disk.used | bytes_attribute_solver}}</td>
+        <td>{{ disk.free | bytes_attribute_solver}}</td>
+        <td>{{ disk.percent }}%</td>
+        <td>{{ disk.type }}</td>
+        <td>{{ disk.mountpoint}}</td>
+
+    </tr>
+    {% elif disk.category == "WRN"%}
+    <tr style="background: #e8db13;">
+        <td>{{disk.created_at}}</td>
+        <td>{{disk.device}}</td>
+        <td>{{ disk.total | bytes_attribute_solver}}</td>
+        <td>{{ disk.used | bytes_attribute_solver}}</td>
+        <td>{{ disk.free | bytes_attribute_solver}}</td>
+        <td>{{ disk.percent }}%</td>
+        <td>{{ disk.type }}</td>
+        <td>{{ disk.mountpoint}}</td>
+    </tr>
+
+    {% elif disk.category == "ERR"%}
+    <tr style="background: #f04d56;">
+        <td>{{disk.created_at}}</td>
+        <td>{{disk.device}}</td>
+        <td>{{ disk.total | bytes_attribute_solver}}</td>
+        <td>{{ disk.used | bytes_attribute_solver}}</td>
+        <td>{{ disk.free | bytes_attribute_solver}}</td>
+        <td>{{ disk.percent }}%</td>
+        <td>{{ disk.type }}</td>
+        <td>{{ disk.mountpoint }}</td>
+    </tr>
+
+    {% endif %}
+    {% endfor %}
+</table>
+    </div>
+{% endblock content %}

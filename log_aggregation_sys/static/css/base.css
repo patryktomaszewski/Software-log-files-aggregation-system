@@ -1,0 +1,63 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+
+body {
+  background: #bebdbd75;
+  margin: 0;
+  font-family: 'Cabin Condensed', sans-serif;
+}
+
+.navbar {
+  background: #82dbf1;
+  padding: 2em;
+}
+
+.navbar .logo {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 2em;
+  color: black;
+}
+
+.navbar .logo span {
+  color: red;
+}
+
+.navbar .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-content: space-between;
+}
+
+.navbar .container ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-content: space-between;
+}
+
+.navbar .container ul li {
+  padding: 0em 1.5em;
+}
+
+.navbar .container ul a {
+  color: black;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.form p{
+  display: inline;
+}
+.form input{
+  display: inline;
+}
+
+

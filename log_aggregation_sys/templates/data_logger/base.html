@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="{% static '/css/base.css' %}" type="text/css" />
+    {% block head %}
+    {% endblock head %}
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="container">
+        <a class="logo" href="">Data<span>Logger</span></a>
+        <nav>
+          <ul>
+            <li class="index-hl"><a href="{% url 'data_logger:main_menu' %}">Main Menu</a></li>
+
+            {% if request.path != '/cpu_data/' %}
+            <li class="index-hl"><a href="{% url 'data_logger:cpu_data' %}">Cpu Data</a></li>
+            {% endif %}
+
+            {% if request.path != '/memory_data/' %}
+            <li class="index-hl"><a href="{% url 'data_logger:memory_data' %}">Memory Data</a></li>
+            {% endif %}
+
+            {% if request.path != '/sensors_data/' %}
+            <li class="index-hl"><a href="{% url 'data_logger:sensors_data' %}">Sensors Data</a></li>
+            {% endif %}
+
+            {% if request.path != '/disk_data/' %}
+            <li class="index-hl"><a href="{% url 'data_logger:disk_data' %}">Disk Data</a></li>
+            {% endif %}
+
+          </ul>
+        </nav>
+        <form method="post">
+          <p>
+        {% csrf_token %}
+        {{ email_form.as_p }}
+        <input type="submit" value="Submit" style="display: inline;" >
+          </p>
+        </form>
+        </div>
+
+      </div>
+
+
+    </div>
+    {% block content %}
+    {% endblock content %}
+  </body>
+<!--<script>-->
+<!--  window.setTimeout(function () {-->
+<!--    location.href = window.location.href;-->
+<!--}, 5000); // refresh/redirect after 5 seconds.-->
+<!--</script>-->
+</html>

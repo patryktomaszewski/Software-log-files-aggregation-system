@@ -1,0 +1,136 @@
+{% extends 'data_logger/base.html' %}
+{% load static %}
+{% load data_filtering %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cpu_data.css' %}" type="text/css" />
+<title>CPU</title>
+{% endblock head %}
+
+{% block content %}
+
+<form method="get" >
+    <div class="filtering">
+    {{ data_filter.form.as_p }}
+        <input type="submit" />
+        <p>Number of registered logs: {{object_list.count}}</p>
+
+    </div>
+
+</form>
+<div style="overflow-x:auto;">
+<table>
+    <tr>
+        <th>Created at
+            <a href="{{request.path}}?{% url_replace '-created_at' %}">
+                <img src="{% static 'imgs/sort-button-asc.png' %}" alt="sort button ascending" width="20" height="20">
+            </a>
+            <a href="{{request.path}}?{% url_replace 'created_at' %}">
+                <img src="{% static 'imgs/sort-button-desc.png' %}" alt="sort button descending" width="20" height="20">
+            </a>
+        </th>
+        <th> User Time </th>
+        <th> Nice Time </th>
+        <th> System Time </th>
+        <th> Idle Time </th>
+        <th> %Cpu </th>
+        <th> %CPU User Time </th>
+        <th> %CPU Nice Time </th>
+        <th> %CPU System Time </th>
+        <th> %CPU Idle Time </th>
+        <th> CPU Count Logical </th>
+        <th> CPU Count Physical </th>
+        <th> Context Switches </th>
+        <th> Interrupts </th>
+        <th> Soft Interrupts </th>
+        <th> System Calls</th>
+        <th> CPU Current Frequency </th>
+        <th> CPU Min Frequency </th>
+        <th> CPU Max Frequency </th>
+        <th> Average System Load 1 Minute </th>
+        <th> Average System Load 5 Minutes </th>
+        <th> Average System Load 15 Minutes </th>
+
+    </tr>
+    {% for cpu in object_list %}
+    {% if cpu.category == "INFO"%}
+    <tr style="background: lightblue;">
+        <td>{{cpu.created_at}}</td>
+        <td>{{cpu.user_time}}</td>
+        <td>{{cpu.nice_time}}</td>
+        <td>{{cpu.system_time}}</td>
+        <td>{{cpu.idle_time}}</td>
+        <td>{{cpu.cpu_percent}}%</td>
+        <td>{{cpu.cpu_time_percent_user}}%</td>
+        <td>{{cpu.cpu_time_percent_nice}}%</td>
+        <td>{{cpu.cpu_time_percent_system}}%</td>
+        <td>{{cpu.cpu_time_percent_idle}}%</td>
+        <td>{{cpu.cpu_count_logical}}</td>
+        <td>{{cpu.cpu_count_physical}}</td>
+        <td>{{cpu.ctx_switches}}</td>
+        <td>{{cpu.interrupts}}</td>
+        <td>{{cpu.soft_interrupts}}</td>
+        <td>{{cpu.sys_calls}}</td>
+        <td>{{cpu.cpu_frequency_current}}</td>
+        <td>{{cpu.cpu_frequency_min}}</td>
+        <td>{{cpu.cpu_frequency_max}}</td>
+        <td>{{cpu.load_avg_1_min}}</td>
+        <td>{{cpu.load_avg_5_min}}</td>
+        <td>{{cpu.load_avg_15_min}}</td>
+    </tr>
+    {% elif cpu.category == "WRN"%}
+    <tr style="background: #e8db13;">
+        <td>{{cpu.created_at}}</td>
+        <td>{{cpu.user_time}}</td>
+        <td>{{cpu.nice_time}}</td>
+        <td>{{cpu.system_time}}</td>
+        <td>{{cpu.idle_time}}</td>
+        <td>{{cpu.cpu_percent}}%</td>
+        <td>{{cpu.cpu_time_percent_user}}%</td>
+        <td>{{cpu.cpu_time_percent_nice}}%</td>
+        <td>{{cpu.cpu_time_percent_system}}%</td>
+        <td>{{cpu.cpu_time_percent_idle}}%</td>
+        <td>{{cpu.cpu_count_logical}}</td>
+        <td>{{cpu.cpu_count_physical}}</td>
+        <td>{{cpu.ctx_switches}}</td>
+        <td>{{cpu.interrupts}}</td>
+        <td>{{cpu.soft_interrupts}}</td>
+        <td>{{cpu.sys_calls}}</td>
+        <td>{{cpu.cpu_frequency_current}}</td>
+        <td>{{cpu.cpu_frequency_min}}</td>
+        <td>{{cpu.cpu_frequency_max}}</td>
+        <td>{{cpu.load_avg_1_min}}</td>
+        <td>{{cpu.load_avg_5_min}}</td>
+        <td>{{cpu.load_avg_15_min}}</td>
+    </tr>
+
+    {% elif cpu.category == "ERR"%}
+    <tr style="background: #f04d56;">
+        <td>{{cpu.created_at}}</td>
+        <td>{{cpu.user_time}}</td>
+        <td>{{cpu.nice_time}}</td>
+        <td>{{cpu.system_time}}</td>
+        <td>{{cpu.idle_time}}</td>
+        <td>{{cpu.cpu_percent}}%</td>
+        <td>{{cpu.cpu_time_percent_user}}%</td>
+        <td>{{cpu.cpu_time_percent_nice}}%</td>
+        <td>{{cpu.cpu_time_percent_system}}%</td>
+        <td>{{cpu.cpu_time_percent_idle}}%</td>
+        <td>{{cpu.cpu_count_logical}}</td>
+        <td>{{cpu.cpu_count_physical}}</td>
+        <td>{{cpu.ctx_switches}}</td>
+        <td>{{cpu.interrupts}}</td>
+        <td>{{cpu.soft_interrupts}}</td>
+        <td>{{cpu.sys_calls}}</td>
+        <td>{{cpu.cpu_frequency_current}}</td>
+        <td>{{cpu.cpu_frequency_min}}</td>
+        <td>{{cpu.cpu_frequency_max}}</td>
+        <td>{{cpu.load_avg_1_min}}</td>
+        <td>{{cpu.load_avg_5_min}}</td>
+        <td>{{cpu.load_avg_15_min}}</td>
+    </tr>
+
+    {% endif %}
+    {% endfor %}
+</table>
+    </div>
+{% endblock content %}

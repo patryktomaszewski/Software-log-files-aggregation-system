@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.box {
+  height: 50vh;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 50%;
+  min-width: 300px;
+}
+
+.box1 {
+  background: red;
+}
+
+.box2 {
+  background: blue;
+}
+
+.box3 {
+  background: green;
+}
+
+.box4 {
+  background: orange;
+}
+
+a.fill-div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}

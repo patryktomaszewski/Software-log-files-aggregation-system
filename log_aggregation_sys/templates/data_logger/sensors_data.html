@@ -1,0 +1,64 @@
+{% extends 'data_logger/base.html' %}
+{% load static %}
+{% load data_filtering %}
+{% load template_helpers %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cpu_data.css' %}" type="text/css" />
+<title>CPU</title>
+{% endblock head %}
+
+{% block content %}
+
+<form method="get" >
+    <div class="filtering">
+    {{ data_filter.form.as_p }}
+        <input type="submit" />
+         <p>Number of registered logs: {{object_list.count}}</p>
+    </div>
+
+</form>
+<div style="overflow-x:auto;">
+<table>
+    <tr>
+        <th>Created at
+            <a href="{{request.path}}?{% url_replace '-created_at' %}">
+                <img src="{% static 'imgs/sort-button-asc.png' %}" alt="sort button ascending" width="20" height="20">
+            </a>
+            <a href="{{request.path}}?{% url_replace 'created_at' %}">
+                <img src="{% static 'imgs/sort-button-desc.png' %}" alt="sort button descending" width="20" height="20">
+            </a>
+        </th>
+        <th> Battery Percentage </th>
+        <th> Is Power Plugged </th>
+        <th> Seconds left before the battery runs out of power </th>
+
+    </tr>
+    {% for sensor in object_list %}
+    {% if sensor.category == "INFO"%}
+    <tr style="background: lightblue;">
+        <td>{{sensor.created_at}}</td>
+        <td>{{sensor.battery_percent}}%</td>
+        <td>{{sensor.is_power_plugged|battery_power_plugged_attribute_solver:sensor.battery_percent  }}</td>
+        <td>{{sensor.sec_left | battery_sec_left_attribute_solver }}</td>
+    </tr>
+    {% elif sensor.category == "WRN"%}
+    <tr style="background: #e8db13;">
+         <td>{{sensor.created_at}}</td>
+        <td>{{sensor.battery_percent}}%</td>
+        <td>{{sensor.is_power_plugged|battery_power_plugged_attribute_solver:sensor.battery_percent  }}</td>
+        <td>{{sensor.sec_left | battery_sec_left_attribute_solver }}</td>
+    </tr>
+
+    {% elif sensor.category == "ERR"%}
+    <tr style="background: #f04d56;">
+        <td>{{sensor.created_at}}</td>
+        <td>{{sensor.battery_percent}}%</td>
+        <td>{{sensor.is_power_plugged|battery_power_plugged_attribute_solver:sensor.battery_percent  }}</td>
+        <td>{{sensor.sec_left | battery_sec_left_attribute_solver }}</td>
+    </tr>
+
+    {% endif %}
+    {% endfor %}
+</table>
+    </div>
+{% endblock content %}
