@@ -61,7 +61,20 @@ class TestDataSaver:
 
 @pytest.mark.django_db
 class TestBackgroundTaskAggregatingData(LiveServerTestCase):
+    @pytest.fixture(autouse=True)
+    def __inject_fixtures(self, mocker):
+        self.mocker = mocker
+
     def test_auto_data_aggregation(self):
+        self.mocker.patch(
+            "data_collector.data_aggregator.DataAggregator.get_all_sensors_data",
+            return_value={
+                "battery_percent": 23.6,
+                "is_power_plugged": True,
+                "sec_left": 23,
+            },
+        )
+
         assert CpuData.objects.all().count() == 0
         assert MemoryData.objects.all().count() == 0
         assert SensorsData.objects.all().count() == 0
