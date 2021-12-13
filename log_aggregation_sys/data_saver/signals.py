@@ -7,24 +7,24 @@ from django.dispatch import receiver
 
 
 @receiver(post_save, sender=CpuData)
-def create_profile(sender, instance, created, **kwargs):  # noqa: F811
+def create_cpu_data(sender, instance, created, **kwargs):  # noqa: F811
     if instance.category == LogCategory.ERROR and settings.ALERT_EMAIL_ADDRESS:
         send_email_alert(instance)
 
 
 @receiver(post_save, sender=MemoryData)
-def create_profile(sender, instance, created, **kwargs):  # noqa: F811
+def create_memory_data(sender, instance, created, **kwargs):  # noqa: F811
     if instance.category == LogCategory.ERROR and settings.ALERT_EMAIL_ADDRESS:
         send_email_alert(instance)
 
 
 @receiver(post_save, sender=SensorsData)
-def create_profile(sender, instance, created, **kwargs):  # noqa: F811
+def create_sensors_data(sender, instance, created, **kwargs):  # noqa: F811
     if instance.category == LogCategory.ERROR and settings.ALERT_EMAIL_ADDRESS:
         send_email_alert(instance)
 
 
 @receiver(post_save, sender=DisksData)
-def create_profile(instance, created, **kwargs):  # noqa: F811
+def create_disk_data(instance, created, **kwargs):  # noqa: F811
     if instance.category == LogCategory.ERROR and settings.ALERT_EMAIL_ADDRESS:
         send_email_alert(instance)
