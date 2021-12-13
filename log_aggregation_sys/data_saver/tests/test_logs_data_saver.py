@@ -1,12 +1,12 @@
-from django.test import LiveServerTestCase, TestCase
-from data_saver.logs_data_saver import DataSaver
-from data_collector.models import (CpuData, DisksData, MemoryData,
-                                   SensorsData)
-import pytest
-from time import sleep
-import platform
-import django
 import os
+import platform
+
+import django
+import pytest
+from data_collector.models import CpuData, DisksData, MemoryData, SensorsData
+from data_saver.logs_data_saver import DataSaver
+from django.test import LiveServerTestCase, TestCase
+from pytest_mock import MockFixture
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "log_aggregation_sys.settings")
 
@@ -15,7 +15,16 @@ django.setup()
 
 @pytest.mark.django_db
 class TestDataSaver(TestCase):
-    def test_create_data_objects(self):
+    def test_create_data_objects(self,  mocker: MockFixture,):
+        mocker.patch(
+            "data_collector.data_aggregator.DataAggregator.get_all_sensors_data",
+            return_value={
+                "battery_percent": 23.6,
+                "is_power_plugged": True,
+                "sec_left": 23,
+            },
+        )
+
         assert CpuData.objects.all().count() == 0
         assert MemoryData.objects.all().count() == 0
         assert SensorsData.objects.all().count() == 0
