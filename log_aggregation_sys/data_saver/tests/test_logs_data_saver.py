@@ -14,8 +14,8 @@ django.setup()
 
 
 @pytest.mark.django_db
-class TestDataSaver(TestCase):
-    def test_create_data_objects(self,  mocker: MockFixture):
+class TestDataSaver:
+    def test_create_data_objects(self, mocker: MockFixture):
         mocker.patch(
             "data_collector.data_aggregator.DataAggregator.get_all_sensors_data",
             return_value={
