@@ -7,9 +7,9 @@ django.setup()
 
 import pytest
 from data_collector.data_aggregator import DataAggregator
-from data_collector.models import (CpuData, DisksData, LogCategory, MemoryData,
-                                   SensorsData)
+from data_collector.models import CpuData, DisksData, LogCategory, MemoryData, SensorsData
 import psutil
+from pytest_mock import MockFixture
 
 
 @pytest.mark.django_db
@@ -28,8 +28,18 @@ class TestDataAggregator:
         memory_data_obj.save()
         assert MemoryData.objects.all().count() == 1
 
-    def test_collect_sensors_data(self):
-        psutil.Process()
+    def test_collect_sensors_data(
+        self,
+        mocker: MockFixture,
+    ):
+        mocker.patch(
+            "data_collector.data_aggregator.DataAggregator.get_all_sensors_data",
+            return_value={
+                "battery_percent": 23.6,
+                "is_power_plugged": True,
+                "sec_left": 23,
+            },
+        )
         sensors_data_dict = DataAggregator().get_all_sensors_data()
         assert SensorsData.objects.all().count() == 0
         sensors_data_obj = SensorsData(**sensors_data_dict)
@@ -62,7 +72,6 @@ class TestCategories:
         data_with_category = DataAggregator().assign_sensors_data_category(sensors_data)
         sensors_data["category"] = category
         assert data_with_category == sensors_data
-
 
     @pytest.mark.parametrize(
         ("memory_data", "category"),
@@ -101,13 +110,8 @@ class TestCategories:
             ),
         ],
     )
-    def test_assign_memory_data_category(
-            self,
-            memory_data: dict,
-            category: LogCategory
-    ):
-        data_with_category = DataAggregator().\
-            assign_memory_data_category(memory_data)
+    def test_assign_memory_data_category(self, memory_data: dict, category: LogCategory):
+        data_with_category = DataAggregator().assign_memory_data_category(memory_data)
         memory_data["category"] = category
         assert data_with_category == memory_data
 
@@ -156,13 +160,8 @@ class TestCategories:
             ),
         ],
     )
-    def test_assign_cpu_data_category(
-            self,
-            cpu_data: dict,
-            category: LogCategory
-    ):
-        data_with_category = DataAggregator().\
-            assign_cpu_data_category(cpu_data)
+    def test_assign_cpu_data_category(self, cpu_data: dict, category: LogCategory):
+        data_with_category = DataAggregator().assign_cpu_data_category(cpu_data)
         cpu_data["category"] = category
         assert data_with_category == cpu_data
 
@@ -176,11 +175,7 @@ class TestCategories:
             ({"percent": 91.0}, LogCategory.ERROR),
         ],
     )
-    def test_assign_disk_data_category(
-            self, disk_data: dict,
-            category: LogCategory
-    ):
-        data_with_category = DataAggregator().\
-            assign_disk_data_category(disk_data)
+    def test_assign_disk_data_category(self, disk_data: dict, category: LogCategory):
+        data_with_category = DataAggregator().assign_disk_data_category(disk_data)
         disk_data["category"] = category
         assert data_with_category == disk_data

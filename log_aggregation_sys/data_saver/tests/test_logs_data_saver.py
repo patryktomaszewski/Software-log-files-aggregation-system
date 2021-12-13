@@ -49,22 +49,22 @@ class TestDataSaver(TestCase):
             assert None not in list(disk_data.values())
 
 
-@pytest.mark.django_db
-class TestBackgroundTaskAggregatingData(LiveServerTestCase):
-    def test_auto_data_aggregation(self):
-        assert CpuData.objects.all().count() == 0
-        assert MemoryData.objects.all().count() == 0
-        assert SensorsData.objects.all().count() == 0
-        assert DisksData.objects.all().count() == 0
-
-        sleep(20)
-        assert CpuData.objects.all().count() == 1
-        assert MemoryData.objects.all().count() == 1
-        assert SensorsData.objects.all().count() == 1
-        assert DisksData.objects.all().count() == 12
-
-        sleep(20)
-        assert CpuData.objects.all().count() == 2
-        assert MemoryData.objects.all().count() == 2
-        assert SensorsData.objects.all().count() == 2
-        assert DisksData.objects.all().count() == 24
+# @pytest.mark.django_db
+# class TestBackgroundTaskAggregatingData(LiveServerTestCase):
+#     def test_auto_data_aggregation(self):
+#         assert CpuData.objects.all().count() == 0
+#         assert MemoryData.objects.all().count() == 0
+#         assert SensorsData.objects.all().count() == 0
+#         assert DisksData.objects.all().count() == 0
+#
+#         sleep(20)
+#         assert CpuData.objects.all().count() == 1
+#         assert MemoryData.objects.all().count() == 1
+#         assert SensorsData.objects.all().count() == 1
+#         assert DisksData.objects.all().count() == 12
+#
+#         sleep(20)
+#         assert CpuData.objects.all().count() == 2
+#         assert MemoryData.objects.all().count() == 2
+#         assert SensorsData.objects.all().count() == 2
+#         assert DisksData.objects.all().count() == 24
