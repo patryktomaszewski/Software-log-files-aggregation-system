@@ -84,10 +84,11 @@ class TestBackgroundTaskAggregatingData(LiveServerTestCase):
         assert CpuData.objects.all().count() == 1
         assert MemoryData.objects.all().count() == 1
         assert SensorsData.objects.all().count() == 1
-        assert DisksData.objects.all().count() == 12
+        disk_data_objects = DisksData.objects.all().count()
+        assert disk_data_objects > 1
 
         sleep(20)
         assert CpuData.objects.all().count() == 2
         assert MemoryData.objects.all().count() == 2
         assert SensorsData.objects.all().count() == 2
-        assert DisksData.objects.all().count() == 24
+        assert DisksData.objects.all().count() > disk_data_objects
