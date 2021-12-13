@@ -7,6 +7,7 @@ from data_collector.models import CpuData, DisksData, MemoryData, SensorsData
 from data_saver.logs_data_saver import DataSaver
 from django.test import LiveServerTestCase, TestCase
 from pytest_mock import MockFixture
+from time import sleep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "log_aggregation_sys.settings")
 
@@ -58,22 +59,22 @@ class TestDataSaver:
             assert None not in list(disk_data.values())
 
 
-# @pytest.mark.django_db
-# class TestBackgroundTaskAggregatingData(LiveServerTestCase):
-#     def test_auto_data_aggregation(self):
-#         assert CpuData.objects.all().count() == 0
-#         assert MemoryData.objects.all().count() == 0
-#         assert SensorsData.objects.all().count() == 0
-#         assert DisksData.objects.all().count() == 0
-#
-#         sleep(20)
-#         assert CpuData.objects.all().count() == 1
-#         assert MemoryData.objects.all().count() == 1
-#         assert SensorsData.objects.all().count() == 1
-#         assert DisksData.objects.all().count() == 12
-#
-#         sleep(20)
-#         assert CpuData.objects.all().count() == 2
-#         assert MemoryData.objects.all().count() == 2
-#         assert SensorsData.objects.all().count() == 2
-#         assert DisksData.objects.all().count() == 24
+@pytest.mark.django_db
+class TestBackgroundTaskAggregatingData(LiveServerTestCase):
+    def test_auto_data_aggregation(self):
+        assert CpuData.objects.all().count() == 0
+        assert MemoryData.objects.all().count() == 0
+        assert SensorsData.objects.all().count() == 0
+        assert DisksData.objects.all().count() == 0
+
+        sleep(20)
+        assert CpuData.objects.all().count() == 1
+        assert MemoryData.objects.all().count() == 1
+        assert SensorsData.objects.all().count() == 1
+        assert DisksData.objects.all().count() == 12
+
+        sleep(20)
+        assert CpuData.objects.all().count() == 2
+        assert MemoryData.objects.all().count() == 2
+        assert SensorsData.objects.all().count() == 2
+        assert DisksData.objects.all().count() == 24
