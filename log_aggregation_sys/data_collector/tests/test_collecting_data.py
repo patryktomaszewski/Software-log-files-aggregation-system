@@ -9,7 +9,6 @@ import pytest
 from data_collector.data_aggregator import DataAggregator
 from data_collector.models import (CpuData, DisksData, LogCategory, MemoryData,
                                    SensorsData)
-from django.test import TestCase
 
 
 @pytest.mark.django_db
@@ -100,11 +99,15 @@ class TestCategories:
             ),
         ],
     )
-    def test_assign_memory_data_category(self, memory_data: dict, category: LogCategory):
-        data_with_category = DataAggregator().assign_memory_data_category(memory_data)
+    def test_assign_memory_data_category(
+            self,
+            memory_data: dict,
+            category: LogCategory
+    ):
+        data_with_category = DataAggregator().\
+            assign_memory_data_category(memory_data)
         memory_data["category"] = category
         assert data_with_category == memory_data
-
 
     @pytest.mark.parametrize(
         ("cpu_data", "category"),
@@ -151,11 +154,15 @@ class TestCategories:
             ),
         ],
     )
-    def test_assign_cpu_data_category(self, cpu_data: dict, category: LogCategory):
-        data_with_category = DataAggregator().assign_cpu_data_category(cpu_data)
+    def test_assign_cpu_data_category(
+            self,
+            cpu_data: dict,
+            category: LogCategory
+    ):
+        data_with_category = DataAggregator().\
+            assign_cpu_data_category(cpu_data)
         cpu_data["category"] = category
         assert data_with_category == cpu_data
-
 
     @pytest.mark.parametrize(
         ("disk_data", "category"),
@@ -167,7 +174,11 @@ class TestCategories:
             ({"percent": 91.0}, LogCategory.ERROR),
         ],
     )
-    def test_assign_disk_data_category(self, disk_data: dict, category: LogCategory):
-        data_with_category = DataAggregator().assign_disk_data_category(disk_data)
+    def test_assign_disk_data_category(
+            self, disk_data: dict,
+            category: LogCategory
+    ):
+        data_with_category = DataAggregator().\
+            assign_disk_data_category(disk_data)
         disk_data["category"] = category
         assert data_with_category == disk_data

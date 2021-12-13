@@ -1,18 +1,16 @@
+from django.test import LiveServerTestCase, TestCase
+from data_saver.logs_data_saver import DataSaver
+from data_collector.models import (CpuData, DisksData, MemoryData,
+                                   SensorsData)
+import pytest
+from time import sleep
+import platform
+import django
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "log_aggregation_sys.settings")
-import django
 
 django.setup()
-
-import platform
-from time import sleep
-
-import pytest
-from data_collector.models import (CpuData, DisksData, MemoryData,
-                                   SensorsData)
-from data_saver.logs_data_saver import DataSaver
-from django.test import LiveServerTestCase, TestCase
 
 
 @pytest.mark.django_db
@@ -28,7 +26,10 @@ class TestDataSaver(TestCase):
         assert CpuData.objects.all().count() == 1
         cpu_data = CpuData.objects.all().values()[0]
         if platform.machine() == "arm64":
-            not_present_values = ["cpu_frequency_current", "cpu_frequency_min", "cpu_frequency_max"]
+            not_present_values = [
+                "cpu_frequency_current",
+                "cpu_frequency_min",
+                "cpu_frequency_max"]
             for key in not_present_values:
                 removed_value = cpu_data.pop(key)
                 assert removed_value is None

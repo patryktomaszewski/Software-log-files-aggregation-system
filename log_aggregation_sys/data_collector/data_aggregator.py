@@ -106,21 +106,21 @@ class DataAggregator:
         if platform.machine() == "arm64":
             # Cpu freq not supported by M1 Apple silicon
             return (
-                self._get_cpu_times_data()
-                | self._get_cpu_percent_data()
-                | self._get_cpu_times_percent_data()
-                | self._get_cpu_count_data()
-                | self._get_cpu_stats_data()
-                | self._get_cpu_load_avg_data()
+                self._get_cpu_times_data() |
+                self._get_cpu_percent_data() |
+                self._get_cpu_times_percent_data() |
+                self._get_cpu_count_data() |
+                self._get_cpu_stats_data() |
+                self._get_cpu_load_avg_data()
             )
         return (
-            self._get_cpu_times_data()
-            | self._get_cpu_percent_data()
-            | self._get_cpu_times_percent_data()
-            | self._get_cpu_count_data()
-            | self._get_cpu_stats_data()
-            | self._get_cpu_load_avg_data()
-            | self._get_cpu_freq_data()
+            self._get_cpu_times_data() |
+            self._get_cpu_percent_data() |
+            self._get_cpu_times_percent_data() |
+            self._get_cpu_count_data() |
+            self._get_cpu_stats_data() |
+            self._get_cpu_load_avg_data() |
+            self._get_cpu_freq_data()
         )
 
     def get_all_memory_data(self) -> dict:
@@ -160,13 +160,20 @@ class DataAggregator:
         return disk_partitions_data
 
     @staticmethod
-    def _is_data_warning(data_list: list, gt: int, lt: int, is_sensor_data: bool = False) -> bool:
+    def _is_data_warning(
+            data_list: list,
+            gt: int, lt: int,
+            is_sensor_data: bool = False
+    ) -> bool:
         if is_sensor_data:
             return any(gt <= record < lt for record in data_list)
         return any(gt < record <= lt for record in data_list)
 
     @staticmethod
-    def _is_data_error(data_list: list, gt: int, is_sensor_data: bool = False) -> bool:
+    def _is_data_error(
+            data_list: list, gt: int,
+            is_sensor_data: bool = False
+    ) -> bool:
         if is_sensor_data:
             return any(gt > record for record in data_list)
         return any(gt < record for record in data_list)
@@ -179,7 +186,10 @@ class DataAggregator:
             cpu_data["cpu_time_percent_system"],
             cpu_data["cpu_time_percent_idle"],
         ]
-        if self._is_data_error(cpu_data_category_keys, CPU_DATA_ERROR_GREATER_THAN):
+        if self._is_data_error(
+                cpu_data_category_keys,
+                CPU_DATA_ERROR_GREATER_THAN
+        ):
             cpu_data["category"] = LogCategory.ERROR
             return cpu_data
 
@@ -200,7 +210,10 @@ class DataAggregator:
             memory_data["use_percentage_swap_memory"],
         ]
 
-        if self._is_data_error(memory_data_category_keys, MEMORY_DATA_ERROR_GREATER_THAN):
+        if self._is_data_error(
+                memory_data_category_keys,
+                MEMORY_DATA_ERROR_GREATER_THAN
+        ):
             memory_data["category"] = LogCategory.ERROR
             return memory_data
 
@@ -243,7 +256,9 @@ class DataAggregator:
         ):
             return disk_data
         if self._is_data_warning(
-            [disk_data["percent"]], DISK_DATA_WARNING_GREATER_THAN, DISK_DATA_WARNING_LESS_OR_EQUAL
+            [disk_data["percent"]],
+                DISK_DATA_WARNING_GREATER_THAN,
+                DISK_DATA_WARNING_LESS_OR_EQUAL
         ):
             disk_data["category"] = LogCategory.WARNING
             return disk_data

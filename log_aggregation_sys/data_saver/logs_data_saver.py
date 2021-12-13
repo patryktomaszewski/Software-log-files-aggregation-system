@@ -41,7 +41,8 @@ class DataSaver:
     @staticmethod
     def _create_cpu_data_object():
         cpu_data_dict = DataAggregator().get_all_cpu_data()
-        cpu_data_with_category = DataAggregator().assign_cpu_data_category(cpu_data_dict)
+        cpu_data_with_category = DataAggregator().\
+            assign_cpu_data_category(cpu_data_dict)
         cpu_data_obj = CpuData(**cpu_data_with_category)
         cpu_data_obj.save()
         logging.info("Cpu data object created")
@@ -49,7 +50,8 @@ class DataSaver:
     @staticmethod
     def _create_memory_data_object():
         memory_data_dict = DataAggregator().get_all_memory_data()
-        memory_data_with_category = DataAggregator().assign_memory_data_category(memory_data_dict)
+        memory_data_with_category = DataAggregator().\
+            assign_memory_data_category(memory_data_dict)
         memory_data_obj = MemoryData(**memory_data_with_category)
         memory_data_obj.save()
         logging.info("Memory data object created")
@@ -57,7 +59,8 @@ class DataSaver:
     @staticmethod
     def _create_sensors_data_object():
         sensors_data_dict = DataAggregator().get_all_sensors_data()
-        sensors_data_with_category = DataAggregator().assign_sensors_data_category(sensors_data_dict)
+        sensors_data_with_category = DataAggregator().\
+            assign_sensors_data_category(sensors_data_dict)
         sensors_data_obj = SensorsData(**sensors_data_with_category)
         sensors_data_obj.save()
         logging.info("Sensors data object created")
@@ -69,7 +72,10 @@ class DataSaver:
             DataAggregator().assign_disk_data_category(disk_data_dict)
             for disk_data_dict in disk_data_list
         ]
-        disk_data_obj_list = [DisksData(**disk_data_dict) for disk_data_dict in disk_data_list_with_category]
+        disk_data_obj_list = [
+            DisksData(**disk_data_dict)
+            for disk_data_dict in disk_data_list_with_category
+        ]
         DisksData.objects.bulk_create(disk_data_obj_list)
         logging.info("Disk data object created")
 

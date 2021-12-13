@@ -1,0 +1,16 @@
+[flake8]
+exclude =
+    .git,
+    .gitignore,
+    *.pot,
+    *.py[co],
+    __pycache__,
+    venv,
+    .env
+    env
+    settings.py
+    test*.py
+    migrations
+ignore =
+     W605
+     W504

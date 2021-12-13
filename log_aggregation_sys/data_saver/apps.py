@@ -7,7 +7,6 @@ class DataSaverConfig(AppConfig):
     name = 'data_saver'
 
     def ready(self):
-        import data_saver.signals
         if os.environ.get('RUN_MAIN', None) != 'true':
             from data_saver.logs_data_saver import DataSaver
             DataSaver().start_scheduler()

@@ -4,7 +4,9 @@ from django.core.mail import send_mail
 
 def send_email_alert(instance) -> None:
 
-    message = f"Logs aggregation system detected error data log associated with {instance.__class__.__name__} at {instance.created_at}"
+    message = f"Logs aggregation system detected error data log" \
+              f" associated with" \
+              f" {instance.__class__.__name__} at {instance.created_at}"
 
     send_mail(
         subject="Logs aggregation system error",

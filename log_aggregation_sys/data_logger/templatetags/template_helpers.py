@@ -1,4 +1,3 @@
-import psutil
 from django import template
 from psutil._common import bytes2human
 
@@ -22,8 +21,14 @@ def battery_sec_left_attribute_solver(item: int) -> str:
 
 
 @register.filter
-def battery_power_plugged_attribute_solver(is_plugged: bool, battery_percent: int) -> str:
+def battery_power_plugged_attribute_solver(
+        is_plugged: bool,
+        battery_percent: int) -> str:
     if is_plugged:
-        return "plugged (charging)" if battery_percent < 100 else "plugged (fully charged)"
+        return (
+            "plugged (charging)"
+            if battery_percent < 100
+            else "plugged (fully charged)"
+        )
     else:
         return "not plugged"

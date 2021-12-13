@@ -1,9 +1,3 @@
-import os
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "log_aggregation_sys.settings")
-import django
-
-django.setup()
 
 import re
 import pytest

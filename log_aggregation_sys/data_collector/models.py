@@ -19,38 +19,50 @@ class CpuData(models.Model):
     cpu_time_percent_system = models.FloatField(_("%CPU System Time"))
     cpu_time_percent_idle = models.FloatField(_("%CPU Idle Time"))
     cpu_count_logical = models.IntegerField(_("CPU Count Logical"), null=True)
-    cpu_count_physical = models.IntegerField(_("CPU Count Physical"), null=True)
+    cpu_count_physical = models.IntegerField(_("CPU Count Physical"),
+                                             null=True)
     ctx_switches = models.IntegerField(_("Context Switches"))
     interrupts = models.IntegerField(_("Interrupts"))
     soft_interrupts = models.IntegerField(_("Soft Interrupts"))
     sys_calls = models.IntegerField(_("System Calls"))
-    cpu_frequency_current = models.FloatField(_("CPU Current Frequency"), blank=True, null=True)
-    cpu_frequency_min = models.FloatField(_("CPU Min Frequency"), blank=True, null=True)
-    cpu_frequency_max = models.FloatField(_("CPU Max Frequency"), blank=True, null=True)
+    cpu_frequency_current = models.FloatField(_("CPU Current Frequency"),
+                                              blank=True, null=True)
+    cpu_frequency_min = models.FloatField(_("CPU Min Frequency"),
+                                          blank=True, null=True)
+    cpu_frequency_max = models.FloatField(_("CPU Max Frequency"),
+                                          blank=True, null=True)
     load_avg_1_min = models.FloatField(_("Average System Load 1 Minute"))
     load_avg_5_min = models.FloatField(_("Average System Load 5 Minutes"))
     load_avg_15_min = models.FloatField(_("Average System Load 15 Minutes"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(
-        max_length=6, choices=LogCategory.choices, default=LogCategory.INFORMATION
+        max_length=6,
+        choices=LogCategory.choices,
+        default=LogCategory.INFORMATION,
     )
 
 
 class MemoryData(models.Model):
     total_physical_memory = models.FloatField(_("Total Physical Memory"))
-    available_physical_memory = models.FloatField(_("Available Physical Memory"))
+    available_physical_memory = models.FloatField(
+        _("Available Physical Memory"))
     used_physical_memory = models.FloatField(_("Used Physical Memory"))
-    use_percentage_physical_memory = models.FloatField(_("Use Percentage Physical Memory"))
+    use_percentage_physical_memory = models.FloatField(
+        _("Use Percentage Physical Memory"))
     total_swap_memory = models.FloatField(_("Total Swap Memory"))
     free_swap_memory = models.FloatField(_("Free Swap Memory"))
     used_swap_memory = models.FloatField(_("Used Swap Memory"))
-    use_percentage_swap_memory = models.FloatField(_("Use Percentage Swap Memory"))
-    sin_swap_memory = models.FloatField(_("Number of Bytes The System Has Swapped In From Disk"))
+    use_percentage_swap_memory = models.FloatField(
+        _("Use Percentage Swap Memory"))
+    sin_swap_memory = models.FloatField(
+        _("Number of Bytes The System Has Swapped In From Disk"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(
-        max_length=6, choices=LogCategory.choices, default=LogCategory.INFORMATION
+        max_length=6,
+        choices=LogCategory.choices,
+        default=LogCategory.INFORMATION,
     )
 
 
@@ -58,12 +70,15 @@ class SensorsData(models.Model):
     battery_percent = models.IntegerField(_("Battery Percentage"))
     is_power_plugged = models.BooleanField(_("Is Power Plugged"))
     sec_left = models.IntegerField(
-        _("Approximation of how many seconds are left before the battery runs out of power")
+        _("Approximation of how many seconds"
+          " are left before the battery runs out of power")
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(
-        max_length=6, choices=LogCategory.choices, default=LogCategory.INFORMATION
+        max_length=6,
+        choices=LogCategory.choices,
+        default=LogCategory.INFORMATION,
     )
 
 
@@ -78,5 +93,7 @@ class DisksData(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(
-        max_length=6, choices=LogCategory.choices, default=LogCategory.INFORMATION
+        max_length=6,
+        choices=LogCategory.choices,
+        default=LogCategory.INFORMATION,
     )
