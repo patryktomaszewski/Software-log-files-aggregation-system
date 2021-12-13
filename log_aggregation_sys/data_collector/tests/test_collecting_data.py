@@ -9,6 +9,7 @@ import pytest
 from data_collector.data_aggregator import DataAggregator
 from data_collector.models import (CpuData, DisksData, LogCategory, MemoryData,
                                    SensorsData)
+import psutil
 
 
 @pytest.mark.django_db
@@ -28,6 +29,7 @@ class TestDataAggregator:
         assert MemoryData.objects.all().count() == 1
 
     def test_collect_sensors_data(self):
+        psutil.Process()
         sensors_data_dict = DataAggregator().get_all_sensors_data()
         assert SensorsData.objects.all().count() == 0
         sensors_data_obj = SensorsData(**sensors_data_dict)
