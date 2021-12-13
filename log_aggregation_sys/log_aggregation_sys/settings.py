@@ -83,16 +83,6 @@ WSGI_APPLICATION = "log_aggregation_sys.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env("DATABASE_NAME"),
-        "USER": env("DATABASE_USER"),
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
-    }
-}
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
@@ -103,6 +93,17 @@ if os.environ.get('GITHUB_WORKFLOW'):
            'PASSWORD': 'postgres',
            'HOST': '127.0.0.1',
            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": env("DATABASE_NAME"),
+            "USER": env("DATABASE_USER"),
+            "PASSWORD": env("DATABASE_PASSWORD"),
+            "HOST": env("DATABASE_HOST"),
+            "PORT": env("DATABASE_PORT"),
         }
     }
 
