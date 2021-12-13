@@ -1,6 +1,8 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Cabin Condensed', sans-serif;
+    text-align: center;
 }
 
 .container {
@@ -8,6 +10,8 @@
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
+    text-align: center;
+
 }
 
 .box {
@@ -16,22 +20,25 @@
   flex-shrink: 1;
   flex-basis: 50%;
   min-width: 300px;
+    background: #82dbf1;
+    text-align: center;
+
 }
 
 .box1 {
-  background: red;
+
 }
 
 .box2 {
-  background: blue;
+
 }
 
 .box3 {
-  background: green;
+
 }
 
 .box4 {
-  background: orange;
+
 }
 
 a.fill-div {
@@ -39,4 +46,19 @@ a.fill-div {
     height: 100%;
     width: 100%;
     text-decoration: none;
+    align-content: center;
+     border: 2px;
+    border-style: solid;
+    border-color: black;
+    color: black;
+    font-size: 700%;
+
+
+}
+
+a.fill-div-box1{
+    border: 0px;
+    border-right: 3px;
+    border-style: solid;
+    border-bottom-color: black;
 }

@@ -10,16 +10,16 @@
 
 <div class="container">
   <div class="box box1">
-    <a href="{% url 'data_logger:cpu_data' %}" class="fill-div"></a>
+    <a href="{% url 'data_logger:cpu_data' %}" class="fill-div fill-div-box1">Cpu Data</a>
   </div>
   <div class="box box2">
-    <a href="#" class="fill-div"></a>
+    <a href="{% url 'data_logger:memory_data' %}" class="fill-div fill-div-box2">Memory Data</a>
   </div>
   <div class="box box3">
-    <a href="#" class="fill-div"></a>
+    <a href="{% url 'data_logger:sensors_data' %}" class="fill-div fill-div-box3">Sensors Data</a>
   </div>
   <div class="box box4">
-    <a href="#" class="fill-div"></a>
+    <a href="{% url 'data_logger:disk_data' %}" class="fill-div fill-div-box4">Disk Data</a>
   </div>
 
 </div>
