@@ -1,2 +1,2 @@
-run: cd log_aggregation_sys
-web: gunicorn log_aggregation_sys.wsgi --log-file -
+
+web: cd log_aggregation_sys && gunicorn log_aggregation_sys.wsgi --log-file -
