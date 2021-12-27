@@ -1,0 +1,1 @@
+web: gunicorn log_aggregation_sys.log_aggregation_sys.wsgi --log-file -
