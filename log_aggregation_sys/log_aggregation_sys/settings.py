@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-f8b-flxc50f_vd3ox41v&k0^em+ihft##oe7f))=hd#iiq1^b#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://slas-web.herokuapp.com/', '127.0.0.1']
 
@@ -51,7 +51,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -79,11 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "log_aggregation_sys.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
@@ -144,8 +138,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = "/static/"
 

@@ -104,10 +104,6 @@ class DataAggregator:
         }
 
     def get_all_cpu_data(self) -> dict:
-        import logging
-        logging.error(f"???????? machine: {platform.machine()}")
-        sys.stdout.write(f"???????? machine: {platform.machine()}")
-
         if platform.machine() == "arm64":
             # Cpu freq not supported by M1 Apple silicon
             return (
