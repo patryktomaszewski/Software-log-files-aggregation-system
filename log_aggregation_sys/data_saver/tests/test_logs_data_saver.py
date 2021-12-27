@@ -5,7 +5,7 @@ import django
 import pytest
 from data_collector.models import CpuData, DisksData, MemoryData, SensorsData
 from data_saver.logs_data_saver import DataSaver
-from django.test import LiveServerTestCase, TestCase
+from django.test import LiveServerTestCase
 from pytest_mock import MockFixture
 from time import sleep
 
