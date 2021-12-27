@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'log_aggregation_sys.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'log_aggregation_sys.log_aggregation_sys.settings')
 
 application = get_wsgi_application()
