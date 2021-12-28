@@ -1,6 +1,5 @@
 import os
 import platform
-import sys
 
 import psutil
 from data_collector.aggregation_constants import (
